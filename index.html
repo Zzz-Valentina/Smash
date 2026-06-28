@@ -2,932 +2,134 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Expediente · Metodología de la Investigación en Psicología II</title>
+<title>Diagnóstico M1</title>
 <style>
-:root{
-  /* ---- archivo / cajón de fichas de laboratorio ---- */
-  --slate:        #E6E3DA;
-  --slate-deep:   #DAD5C6;
-  --card:         #F7F4EB;
-  --card-line:    #C7C0AC;
-  --ink:          #1D1F1B;
-  --ink-soft:     #5B5A50;
-  --ink-faint:    #8C8A7C;
-  --rail:         #2A2C26;
-  --green:        #2F4D3A;
-  --green-deep:   #1F3528;
-  --green-tint:   #DCE6DD;
-  --red:          #A6342A;
-  --red-deep:     #7C2520;
-  --red-tint:     #F3DAD3;
-  --gold:         #9B7B2E;
-  --gold-tint:    #ECE2C4;
-  --shadow-card:  0 1px 0 rgba(0,0,0,0.05), 0 14px 26px -16px rgba(0,0,0,0.45);
-  --serif: "Spectral", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
-}
-
-*{ box-sizing: border-box; }
-html,body{ margin:0; padding:0; }
-
-body{
-  background: var(--slate);
-  background-image:
-    repeating-linear-gradient(135deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 5px);
-  color: var(--ink);
-  font-family: var(--sans);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
-
-a{ color: inherit; }
-button{ font: inherit; }
-
-.cabinet{
-  display: grid;
-  grid-template-columns: 248px 1fr;
-  min-height: 100vh;
-  align-items: stretch;
-}
-
-.rail{
-  background: var(--rail);
-  background-image: linear-gradient(180deg, rgba(255,255,255,0.03), transparent 18%);
-  color: #EDEAE0;
-  padding: 28px 0 24px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.rail-brand{
-  padding: 0 22px 22px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  margin-bottom: 6px;
-}
-.rail-brand .stamp{
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #B9C9BB;
-  border: 1px solid #43523F;
-  display: inline-block;
-  padding: 3px 7px;
-  border-radius: 2px;
-  margin-bottom: 12px;
-  white-space: nowrap;
-}
-.rail-brand h1{
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 600;
-  line-height: 1.25;
-  margin: 0 0 6px;
-  color: #F7F4EB;
-}
-.rail-brand p{
-  font-size: 11.5px;
-  line-height: 1.5;
-  color: #A8A695;
-  margin: 0;
-}
-
-.drawer-list{
-  list-style: none;
-  margin: 10px 0 0;
-  padding: 0;
-  flex: 1;
-}
-
-.tab-btn{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: transparent;
-  border: none;
-  border-left: 3px solid transparent;
-  color: #C7C5B8;
-  text-align: left;
-  padding: 11px 20px 11px 19px;
-  cursor: pointer;
-  position: relative;
-  transition: background .15s ease, color .15s ease, border-color .15s ease;
-}
-.tab-btn:hover{ background: rgba(255,255,255,0.04); color: #F2F0E6; }
-.tab-btn .tag{
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: #7F8B74;
-  min-width: 22px;
-}
-.tab-btn .label{
-  flex: 1;
-  font-size: 13.5px;
-  font-weight: 500;
-  line-height: 1.3;
-}
-.tab-btn .count{
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: #8C8A7C;
-  background: rgba(255,255,255,0.06);
-  border-radius: 3px;
-  padding: 1px 6px;
-}
-.tab-btn.active{
-  background: var(--card);
-  color: var(--ink);
-  border-left-color: var(--green);
-}
-.tab-btn.active .tag{ color: var(--green); }
-.tab-btn.active .count{ background: var(--green-tint); color: var(--green-deep); }
-
-.tab-btn.flagged-tab{ border-left-color: rgba(166,52,42,0.3); }
-.tab-btn.flagged-tab .tag{ color: #C98A82; }
-.tab-btn.flagged-tab.active{
-  background: var(--red-tint);
-  border-left-color: var(--red);
-  color: var(--red-deep);
-}
-.tab-btn.flagged-tab.active .tag{ color: var(--red); }
-.tab-btn.flagged-tab.active .count{ background: rgba(166,52,42,0.16); color: var(--red-deep); }
-
-.rail-foot{
-  padding: 16px 20px 4px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  margin-top: 8px;
-}
-.rail-stats{ display: flex; justify-content: space-between; font-family: var(--mono); margin-bottom: 12px; }
-.rail-stats .s{ text-align: left; }
-.rail-stats .s .n{ display:block; font-size: 18px; font-weight: 600; color: #F2F0E6; }
-.rail-stats .s .l{ font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: #8C8A7C; }
-
-.reset-btn{
-  border: 1px solid rgba(255,255,255,0.14);
-  background: transparent;
-  color: #9D9B8C;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  padding: 7px 10px;
-  border-radius: 3px;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  transition: border-color .15s ease, color .15s ease;
-}
-.reset-btn:hover{ border-color: var(--red); color: #E2A39C; }
-
-.desk{ padding: 36px 44px 80px; max-width: 1280px; }
-
-.desk-head{
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 26px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid var(--ink);
-}
-.desk-head .folio{
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin: 0 0 4px;
-}
-.desk-head h2{ font-family: var(--serif); font-size: 30px; font-weight: 600; margin: 0; color: var(--ink); }
-.desk-progress{ font-family: var(--mono); font-size: 12px; color: var(--ink-soft); text-align: right; }
-.desk-progress .bar{ width: 160px; height: 5px; background: var(--card-line); border-radius: 3px; margin-top: 6px; overflow: hidden; }
-.desk-progress .bar i{ display: block; height: 100%; background: var(--green); border-radius: 3px; transition: width .3s ease; }
-
-.panel{ display: none; }
-.panel.active{ display: block; animation: settle .3s ease; }
-@keyframes settle{ from{ opacity: 0; transform: translateY(5px); } to{ opacity: 1; transform: translateY(0); } }
-
-.card-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
-
-.index-card{
-  background: var(--card);
-  border: 1px solid var(--card-line);
-  border-radius: 3px;
-  box-shadow: var(--shadow-card);
-  position: relative;
-  padding: 22px 20px 18px 20px;
-  min-height: 210px;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  transition: transform .12s ease, box-shadow .12s ease;
-  background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 27px, rgba(42,44,38,0.07) 27px, rgba(42,44,38,0.07) 28px);
-  background-position: 0 64px;
-}
-.index-card::before{
-  content: "";
-  position: absolute;
-  top: 12px; left: 14px;
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--slate);
-  box-shadow: 20px 0 0 var(--slate);
-  border: 1px solid var(--card-line);
-}
-.index-card:hover{ transform: translateY(-2px); box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 18px 30px -16px rgba(0,0,0,.5); }
-
-.index-card .folio-row{ display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; padding-left: 38px; }
-.index-card .folio-tag{ font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--ink-faint); }
-.index-card .review-mark{
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--gold); border: 1px solid var(--gold); border-radius: 2px; padding: 1px 6px;
-  transform: rotate(-3deg); opacity: 0; transition: opacity .15s ease;
-}
-.index-card.is-known .review-mark{ opacity: 1; }
-
-.index-card .body{ flex: 1; padding-left: 38px; font-family: var(--serif); font-size: 16px; line-height: 1.45; font-weight: 500; color: var(--ink); }
-.index-card .body.answer{ font-family: var(--sans); font-size: 13.5px; font-weight: 400; line-height: 1.6; color: var(--green-deep); }
-.index-card .body.answer .a-label{ display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
-
-.index-card .foot-row{ display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-left: 38px; gap: 8px; }
-.flip-cue{ font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: .04em; }
-
-.clip-btn{
-  border: none; background: transparent; display: flex; align-items: center; gap: 6px;
-  font-family: var(--mono); font-size: 10.5px; letter-spacing: .03em; color: var(--ink-faint);
-  cursor: pointer; padding: 4px 8px 4px 4px; border-radius: 2px; z-index: 2; transition: color .15s ease;
-}
-.clip-btn .clip-icon{ width: 15px; height: 18px; position: relative; flex: none; }
-.clip-btn .clip-icon svg{ width:100%; height:100%; display:block; }
-.clip-btn:hover{ color: var(--red-deep); }
-.clip-btn.is-flagged{ color: var(--red); font-weight: 600; }
-.clip-btn.is-flagged .clip-icon svg path{ stroke: var(--red); }
-.clip-btn:not(.is-flagged) .clip-icon svg path{ stroke: var(--ink-faint); }
-
-.review-btn{
-  border: 1px solid var(--card-line); background: transparent; font-family: var(--mono); font-size: 10.5px;
-  color: var(--ink-soft); padding: 4px 9px; border-radius: 2px; cursor: pointer; z-index: 2; transition: all .15s ease;
-}
-.review-btn:hover{ border-color: var(--green); color: var(--green-deep); }
-.review-btn.is-known{ border-color: var(--gold); background: var(--gold-tint); color: var(--gold); font-weight: 600; }
-
-.index-card.flipped .body:not(.answer), .index-card.flipped .a-label{ display: none; }
-.index-card:not(.flipped) .body.answer{ display: none; }
-
-.index-card.is-known{ background: #F8F6EE; }
-.index-card.is-known::after{ content: ""; position: absolute; inset: 0; border: 1px solid rgba(155,123,46,0.35); border-radius: 3px; pointer-events: none; }
-
-.empty-state{ display: flex; flex-direction: column; align-items: center; text-align: center; padding: 80px 20px 90px; color: var(--ink-soft); }
-.empty-state .seal{
-  width: 70px; height: 70px; border: 2px solid var(--green); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; color: var(--green);
-  font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
-  transform: rotate(-8deg); margin-bottom: 22px; line-height: 1.3;
-}
-.empty-state h3{ font-family: var(--serif); font-size: 21px; color: var(--ink); margin: 0 0 8px; }
-.empty-state p{ max-width: 40ch; font-size: 13.5px; line-height: 1.6; margin: 0; }
-
-@media (max-width: 880px){
-  .cabinet{ grid-template-columns: 1fr; }
-  .rail{ position: static; height: auto; padding: 18px 0; }
-  .rail-brand{ padding: 0 18px 16px; }
-  .drawer-list{ display: flex; overflow-x: auto; gap: 2px; padding: 0 12px; -webkit-overflow-scrolling: touch; }
-  .tab-btn{ flex: 0 0 auto; width: auto; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; padding: 9px 14px; }
-  .tab-btn.active{ border-left: none; border-bottom-color: var(--green); }
-  .tab-btn.flagged-tab.active{ border-bottom-color: var(--red); }
-  .rail-foot{ display: none; }
-  .desk{ padding: 26px 18px 60px; }
-  .desk-head h2{ font-size: 23px; }
-  .card-grid{ grid-template-columns: 1fr; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  .panel.active{ animation: none; }
-  .index-card{ transition: none; }
-}
-
-button:focus-visible, .index-card:focus-visible{ outline: 2px solid var(--green); outline-offset: 2px; }
+  body{font-family:monospace;background:#111;color:#eee;padding:20px;}
+  h1{color:#ffae00;}
+  .row{border:1px solid #444;margin:10px 0;padding:10px;border-radius:6px;}
+  .ok{border-color:#2ecc71;}
+  .bad{border-color:#e74c3c;}
+  .label{color:#888;}
+  textarea{width:100%;height:80px;background:#000;color:#0f0;font-size:11px;}
+  input{width:300px;padding:6px;font-size:14px;}
+  button{padding:8px 16px;font-size:14px;cursor:pointer;}
+  pre{white-space:pre-wrap;word-break:break-all;background:#000;padding:8px;border-radius:4px;font-size:11px;max-height:200px;overflow:auto;}
 </style>
 </head>
 <body>
-
-<div class="cabinet">
-
-  <aside class="rail">
-    <div class="rail-brand">
-      <span class="stamp">Expediente · Metod. II</span>
-      <h1>Fichero de la asignatura</h1>
-      <p>130 fichas de índice repartidas en 7 carpetas temáticas. Engancha un clip rojo a las que aún no domines.</p>
-    </div>
-
-    <ul class="drawer-list" id="drawerList"></ul>
-
-    <div class="rail-foot">
-      <div class="rail-stats">
-        <div class="s"><span class="n" id="statTotal">0</span><span class="l">Fichas</span></div>
-        <div class="s"><span class="n" id="statKnown">0</span><span class="l">Revisadas</span></div>
-        <div class="s"><span class="n" id="statFlagged">0</span><span class="l">Con clip</span></div>
-      </div>
-      <button class="reset-btn" id="resetAllBtn">↺ reiniciar expediente</button>
-    </div>
-  </aside>
-
-  <main class="desk" id="desk"></main>
-
-</div>
+<h1>🔍 Diagnóstico de datos del formulario</h1>
+<p>Busca un nombre (ej. "Natalia") y presiona Buscar. Esto descarga el CSV REAL de Google Sheets en este momento (sin caché) y muestra exactamente lo que contiene.</p>
+<input id="nameInput" placeholder="Nombre a buscar..." value="Natalia">
+<button onclick="buscar()">Buscar</button>
+<div id="resultado"></div>
 
 <script>
-// ============================================================
-// DATOS — fichas por capítulo
-// ============================================================
-const CAP1 = [
-  { q:"¿Qué es una variable y qué condición deben cumplir sus valores?",
-    a:"Una variable es cada característica de un sujeto que se puede medir y que varía entre sujetos. Cada sujeto debe tener un solo valor por variable: los valores tienen que ser excluyentes y exclusivos (ningún sujeto puede tener dos valores a la vez, y un valor no puede corresponder a dos sujetos). Al conjunto de valores que puede tomar una variable se le llama escala." },
-  { q:"¿Qué diferencia hay entre variables cualitativas y cuantitativas?",
-    a:"En las cualitativas los valores representan categorías (cualidad), no cantidades. En las cuantitativas los valores son números que representan cantidades, de modo que un valor es mayor o menor que otro (p. ej. las puntuaciones de un test)." },
-  { q:"Dentro de las variables cualitativas, ¿qué diferencia hay entre escala nominal y ordinal?",
-    a:"Nominal: las categorías no establecen orden, los valores son intercambiables (sexo, raza, diagnóstico). Ordinal: las categorías sí establecen un orden y no son intercambiables (nivel educativo, nivel socioeconómico). Las ordinales con varias categorías se llaman también semi-cuantitativas y se pueden tratar como cuantitativas en los análisis." },
-  { q:"Dentro de las variables cuantitativas, ¿qué diferencia hay entre escala de intervalo y de razón?",
-    a:"De intervalo: las diferencias entre valores son iguales pero no hay un cero absoluto (el investigador lo fija arbitrariamente); ejemplos: temperatura corporal, CI. De razón: sí hay un cero absoluto que indica ausencia de la variable; ejemplo: puntuación en una prueba de depresión (0 = ausencia de depresión)." },
-  { q:"¿Qué diferencia hay entre variable discreta y continua?",
-    a:"Discreta: solo toma valores concretos dentro de un conjunto, suelen ser números enteros sin decimales (p. ej. puntuaciones de un test). Continua: puede tomar cualquier valor dentro de un intervalo, admite decimales (p. ej. edad, altura, peso). En la práctica, para el análisis estadístico las variables se suelen tratar como discretas." },
-  { q:"¿Qué variables cualitativas NO se pueden transformar en cuantitativas?",
-    a:"Las variables cualitativas de tipo nominal no se pueden transformar en cuantitativas. Sí se pueden transformar entre sí las cualitativas ordinales y las cuantitativas." },
-  { q:"¿Cuándo interesa transformar una variable cualitativa en cuantitativa, o viceversa?",
-    a:"Nunca debe hacerse solo «porque no sale nada» (manipular los datos para que digan lo que interesa). Es justificado: pasar de cualitativa a cuantitativa cuando la muestra es pequeña o algún grupo tiene muy pocos sujetos; pasar de cuantitativa a cualitativa cuando los datos tienen más sentido agrupados o se quiere establecer un punto de corte (apoyado en bibliografía previa)." },
-  { q:"¿Por qué es recomendable recoger siempre las variables en formato cuantitativo si es posible?",
-    a:"Porque después siempre se puede pasar de cuantitativa a cualitativa, pero el proceso inverso es imposible: si se recogió la edad ya agrupada en categorías, no se puede recuperar el dato exacto de cada sujeto." },
-  { q:"¿Qué es el nivel de significación y qué valores de referencia se usan?",
-    a:"Es la probabilidad «real» de rechazar la H0. El mínimo exigido es p < 0,05. Otros niveles de referencia: p < 0,01 (muy significativo, 99% de probabilidad de que H1 sea cierta) y p < 0,001 (altamente significativo, 99,9%). Aunque p = 0,000, nunca se acepta H1 al 100%; se reporta como p < 0,001." },
-  { q:"¿Cuáles son las tres medidas de tendencia central y qué ocurre con ellas en una distribución normal?",
-    a:"Media (promedio), mediana (valor que divide la muestra en dos mitades) y moda (valor más frecuente). En una distribución normal: media = mediana = moda. La representación gráfica es la Campana de Gauss." },
-  { q:"En una distribución normal, ¿qué porcentaje de sujetos se sitúa en ±1, ±2 y ±3 desviaciones típicas de la media?",
-    a:"El 68,2% de los sujetos está entre la media ±1 desviación estándar; el 95,4% entre ±2; y el 99,6% entre ±3. Por convención: ±1 = rendimiento normal, entre 1 y 2 = deterioro leve, entre 2 y 3 = deterioro moderado, más de 3 = deterioro grave." },
-  { q:"¿Qué indican el coeficiente de asimetría y el coeficiente de curtosis?",
-    a:"Asimetría: si la distribución es simétrica respecto al valor central; si es mayor que 2 se considera asimétrica (a la derecha = mayoría con puntuaciones altas; a la izquierda = mayoría con puntuaciones bajas). Curtosis: el grado de concentración de valores en la zona central; mayor que 2 indica distribución leptocúrtica (muy «picuda») o platicúrtica (muy «plana»); la curva normal es mesocúrtica." },
-  { q:"¿Qué pruebas estadísticas contrastan la normalidad y cuál es la regla de decisión?",
-    a:"La prueba de Kolmogorov-Smirnov y la prueba de Shapiro-Wilk (recomendada con muestras de hasta 50 sujetos). En ambas, si p < 0,05 la variable NO sigue una distribución normal." },
-  { q:"¿Qué consecuencia tiene que una variable no cumpla los supuestos de normalidad?",
-    a:"No se pueden usar estadísticos paramétricos y hay que recurrir a estadísticos no paramétricos (esto también ocurre si la muestra es inferior a 30). Siempre que sea posible es mejor usar paramétricos, porque son más potentes y fiables." },
-  { q:"Si no se cumple la normalidad, ¿a qué dos causas puede deberse?",
-    a:"1) La muestra está mal seleccionada (sesgo muestral), por lo que los resultados no son representativos. 2) La variable estudiada no responde, por su propia naturaleza, a una distribución normalizada (p. ej. medir la prevalencia de la gripe solo en diciembre-enero)." },
-  { q:"Dentro de la estadística descriptiva, ¿qué cuatro tipos de medidas existen?",
-    a:"Frecuencias (cuántas veces aparece un valor; para variables cualitativas), tendencia central (media, mediana, moda; sobre todo la media para cuantitativas), variabilidad (rango, varianza, desviación típica) y posición (cuartiles, deciles, percentiles)." },
-  { q:"¿Qué diferencia hay entre porcentaje y porcentaje válido al hablar de frecuencias?",
-    a:"El porcentaje tiene en cuenta el total de sujetos de la muestra; el porcentaje válido excluye los casos perdidos (sujetos sin valor en esa variable concreta)." },
-  { q:"¿Qué son el rango, la varianza y la desviación típica?",
-    a:"Rango: diferencia entre el valor mayor y el menor. Varianza: mide la distancia entre cada valor y la media. Desviación típica: raíz cuadrada de la varianza. A mayor valor, mayor variabilidad/dispersión; si la d.t. es casi tan grande como la media, hay valores extremos que distorsionan la muestra." },
-  { q:"¿Qué informan los estadísticos de posición (cuartiles, deciles, percentiles)?",
-    a:"Informan de la posición de un sujeto respecto al resto de la muestra. Cuartiles dividen la muestra en 4, deciles en 10 y percentiles en 100; siempre expresan el % de sujetos que queda por debajo. Solo tienen sentido en muestras amplias (mín. 100 sujetos); para usarlos como baremos de comparación la muestra original debe ser muy grande (>300) y seguir una distribución normal." },
-  { q:"¿Por qué la correlación nunca implica causalidad?",
-    a:"Porque aunque dos variables correlacionen, eso no determina que una sea causa de la otra. Pueden darse tres situaciones: relación causal unidireccional, relación causal bidireccional, o ausencia de relación causal real (ambas correlacionan por una tercera variable que es la verdadera causa de ambas)." },
-  { q:"¿Qué valora la Chi cuadrado (X²) y qué requisito necesita su cálculo?",
-    a:"Valora si hay relación/asociación entre variables cualitativas o categóricas (no indica el sentido de la relación ni causalidad). Se basa en una tabla de contingencia y requiere que las frecuencias teóricas sean mayores de 5." },
-  { q:"¿Qué es el coeficiente de correlación de Pearson y cuál es su versión no paramétrica?",
-    a:"Mide la relación lineal entre dos variables cuantitativas (símbolo r); va de -1 a +1: cuanto más cerca de ±1, más fuerte la relación; cerca de 0, no hay correlación. La versión no paramétrica es el coeficiente de Spearman (símbolo ρ, rho)." },
-  { q:"¿Qué significa que una correlación sea positiva o negativa?",
-    a:"Positiva: valores altos de una variable se asocian con valores altos de la otra (y bajos con bajos). Negativa o inversa: valores altos de una se asocian con valores bajos de la otra." },
-  { q:"¿Qué prueba se usa para comparar la media de una variable cuantitativa con un valor conocido, y cuál para muestras independientes y relacionadas?",
-    a:"T de Student para una muestra (comparar con un valor de referencia, p. ej. la media del WAIS=100); para muestras independientes (comparar dos grupos, p. ej. hombres vs mujeres; no paramétrica: U de Mann-Whitney); para muestras relacionadas (mismo grupo medido en dos momentos; no paramétrica: prueba de Wilcoxon)." },
-  { q:"¿Qué es la ANOVA (Análisis de la varianza de un factor) y cuál es su versión no paramétrica?",
-    a:"Es una extensión de la t de Student que permite comparar una variable cuantitativa entre tres o más grupos definidos por una sola variable cualitativa (factor). No analiza la interacción entre más de un factor. La versión no paramétrica es la prueba H de Kruskal-Wallis." }
-];
+const SID = '1Lxz_7Hf20m685XGDQQmNFL0IclDY8RzK0IXIo0jnZg4';
+const GID_DATOS = '0';
 
-const CAP2 = [
-  { q:"¿Cuál es el objetivo central de la investigación cualitativa frente a la cuantitativa?",
-    a:"Conseguir una comprensión profunda de los significados y vivencias de las personas, en vez de obtener una medida cuantitativa precisa. Se desarrolla de forma inductiva (de lo particular a lo general) y es un proceso iterativo: recogida y análisis de datos pueden darse de forma simultánea." },
-  { q:"Según Creswell, ¿qué papel juega la revisión bibliográfica en investigación cualitativa?",
-    a:"Un papel menos importante que en cuantitativa: no se usa tanto para fundamentar hipótesis previas (de hecho puede no haberlas) sino para demostrar la relevancia del fenómeno a estudiar. Hernández-Sampieri diferencia tres posturas: radical (no interesan estudios previos), intermedia (ayudan a delimitar el fenómeno) e integradora (ayudan a plantear el marco teórico)." },
-  { q:"¿Qué tipo de muestreo se usa en investigación cualitativa?",
-    a:"Muestreo intencional (no probabilístico): el investigador selecciona deliberadamente a los sujetos que le interesan para el estudio. El tamaño muestral puede cambiar durante el estudio. No importa tanto la representatividad como que aporte información relevante sobre el fenómeno." },
-  { q:"¿Quiénes son los «gatekeepers» en investigación cualitativa?",
-    a:"Las personas con un rol importante en el contexto estudiado (oficial o informal) que pueden facilitar o dificultar el acceso del investigador al campo. Es necesario identificarlas y «ganárselas» explicándoles bien los objetivos del estudio." },
-  { q:"¿Qué caracteriza a la observación participante frente a la observación sistemática?",
-    a:"El investigador se convierte en observador activo que interviene o comparte el fenómeno con los sujetos observados (el grupo lo considera «uno más»). Participa externa (como investigador) e internamente (compartiendo vivencias)." },
-  { q:"¿Cuáles son las ventajas de la observación participante (según Creswell)?",
-    a:"1) Describe el fenómeno en tiempo real, evitando el sesgo de memoria. 2) Permite acercarse a la conducta «real» (no la que dicen tener). 3) Se puede hacer aunque los sujetos no quieran cooperar (siempre con consentimiento). 4) Facilita el estudio de sujetos con dificultades para expresarse verbalmente." },
-  { q:"¿Cuáles son los inconvenientes de la observación participante?",
-    a:"1) El investigador puede quedarse en un nivel superficial si no planifica bien los objetivos. 2) Debe restringirse a un fenómeno observable directamente. 3) Puede provocar reactividad (falta de espontaneidad por la presencia del investigador)." },
-  { q:"¿Qué tres tipos de observación existen según el grado de especificidad?",
-    a:"Descriptiva (se observa todo lo que sucede), enfocada (se observan aspectos seleccionados por los sujetos) y selectiva (se observan aspectos seleccionados por el investigador)." },
-  { q:"¿Para qué se utiliza la técnica del grupo nominal y cuántas personas lo integran?",
-    a:"Se atribuye a Delbecq y Van de Ven (1975) y se usa para llegar a un consenso de grupo cuando la opinión de un solo experto no basta. Se recomienda un grupo pequeño de 6 a 10 personas." },
-  { q:"¿Cuáles son las 8 fases del grupo nominal?",
-    a:"1) Generación silenciosa de ideas (10-15 min). 2) Manifestación secuencial de ideas (una por ronda, sin discutir). 3) Discusión de ideas. 4) Votación preliminar silenciosa e independiente. 5) Pausa. 6) Discusión de los resultados de la primera votación. 7) Votación final silenciosa e independiente. 8) Presentación de resultados." },
-  { q:"¿Cuáles son las principales ventajas e inconvenientes del grupo nominal?",
-    a:"Ventajas: recoge propuestas de todos, ordena ideas por importancia, estimula la participación, evita dominio de personalidades fuertes en la fase de producción, da tiempo en igualdad de condiciones e incorpora votación para el consenso. Inconvenientes: falta de habilidad del investigador para presentar temas o conducir discusiones, tamaño del grupo, dominio de un líder, resistencia a participar y desigualdad para expresar opiniones (p. ej. por jerarquía laboral)." },
-  { q:"¿En qué se originó la técnica Delphi y cuál es su diferencia clave con el grupo nominal?",
-    a:"Se originó en la RAND Corporation en los años 50 (Dalkey y Helmer, años 60) para predicciones a futuro; hoy se usa también en estudios transversales. A diferencia del grupo nominal, los expertos NO se reúnen físicamente." },
-  { q:"¿Cuáles son los 4 principios básicos de la técnica Delphi?",
-    a:"1) Iteración (rondas repetidas de consulta). 2) Anonimato de los participantes. 3) Retroalimentación controlada (se comparten los resultados de cada ronda con todos los expertos, reduciendo el «ruido»). 4) Respuesta estadística del grupo (media, mediana, moda, etc. para construir el consenso)." },
-  { q:"¿Cuáles son las tres fases de la técnica Delphi?",
-    a:"Fase preparatoria (formular el problema, seleccionar expertos —15-20 recomendados, máx. 30—, preparar el cuestionario, decidir la vía de consulta), fase de consulta (envío del cuestionario, procesamiento estadístico, retroalimentación controlada, rescate de expertos que abandonan) y fase de consenso (construcción del consenso e informe de resultados)." },
-  { q:"¿Cuáles son las ventajas e inconvenientes de la técnica Delphi?",
-    a:"Ventajas: mayor libertad para opinar (anonimato), mayor objetividad, consenso fiable, evita conflictos entre expertos, no requiere desplazamientos. Inconvenientes: proceso largo (hasta 70 días) con riesgo de abandono, mucho tiempo/esfuerzo del investigador, presión sutil para adaptarse a la mayoría, riesgo de perder ideas novedosas, y se da el mismo peso a todos los expertos aunque no tengan el mismo nivel." },
-  { q:"¿Qué es un protocolo de entrevista?",
-    a:"Documento elaborado por el investigador que contiene instrucciones para el desarrollo de la entrevista, las preguntas a formular y espacio para anotar respuestas y observaciones. Incluye encabezado con datos identificativos, resumen de objetivos y las preguntas en sí." },
-  { q:"¿Qué caracteriza a la entrevista en profundidad y cuáles son sus tres fases?",
-    a:"Es una entrevista no estructurada/abierta en la que se explora uno o dos temas en detalle de forma flexible. Fases: 1) Introductoria (10-20 min, preguntas neutras para crear confianza). 2) Desarrollo (20-40 min, preguntas según objetivos, mínima intervención del entrevistador). 3) Cierre (20-40 min, preguntas abiertas para relajar al sujeto tras temas emocionales)." },
-  { q:"¿Qué habilidades de comunicación necesita el entrevistador en profundidad?",
-    a:"Clarificación (resumir y reproducir para aclarar), síntesis (resumir lo dicho), señalamiento (volver sobre algo que el sujeto pasó por alto), parafraseo (repetir con otras palabras, dando una interpretación), escucha activa (comunicación no verbal, asentimientos) y manejo del silencio (favorece la reflexión del entrevistado)." },
-  { q:"¿Qué es la historia de vida y qué tres tipos existen?",
-    a:"Técnica para analizar la narración de un individuo o grupo sobre su propia historia, experiencias y expectativas vitales. Tipos: 1) Completa (toda la vida del sujeto). 2) Focal o temática (un aspecto o acontecimiento concreto, permite historias cruzadas). 3) Elaborada por el investigador (este participa de forma más activa intercalando reflexiones)." },
-  { q:"¿Qué riesgo de subjetividad plantea la historia de vida y cómo se recomienda afrontarlo?",
-    a:"El investigador puede mostrar empatía o rechazo según lo narrado (p. ej. entrevistar a víctimas vs. agresores), o sesgar la muestra final descartando casos que no apoyan la hipótesis. Berg (1990) recomienda mantener una «distancia cínica»: una actitud neutra ante lo narrado." },
-  { q:"¿Qué tipos de documentos y materiales audiovisuales se usan en investigación cualitativa?",
-    a:"Públicos (actas, memorias, mensajes en medios, redes sociales oficiales) y privados (DNI, extractos bancarios, currículum, cartas, diarios, comentarios personales en redes). Los privados aportan información de primera mano con el lenguaje propio del sujeto, pero pueden ser difíciles de localizar o leer." }
-];
+function csvUrl(sid, gid) {
+  return `https://docs.google.com/spreadsheets/d/${sid}/gviz/tq?tqx=out:csv&gid=${gid}&_=${Date.now()}`;
+}
 
-const CAP3 = [
-  { q:"¿Por qué el análisis cualitativo es un proceso continuo y no posterior a la recogida de datos?",
-    a:"Porque la investigación cualitativa sigue un proceso iterativo o circular: distintas fases pueden darse simultáneamente y puede haber vueltas atrás. El análisis comienza con el primer sujeto, aunque al final se hace un análisis global de todos los datos." },
-  { q:"¿Qué características definen al análisis cualitativo según Hernández-Sampieri?",
-    a:"1) Da estructura a datos no estructurados. 2) Busca describir experiencias, comprender el contexto, explicar fenómenos, reconstruir historias y desarrollar teorías. 3) Requiere mucho volumen de datos. 4) El propio investigador es fuente de datos (sus impresiones), pero su subjetividad no debe condicionar los resultados. 5) Distintos investigadores pueden interpretar igual la misma información de forma diferente. 6) Es flexible, no se rige por reglas fijas. 7) Los datos se organizan en unidades, códigos y categorías." },
-  { q:"¿Cuáles son los tres niveles de análisis del análisis de contenido?",
-    a:"Sintáctico (definir las unidades de análisis), semántico (analizar el contexto/párrafos y elaborar categorías) y pragmático (analizar el contexto y circunstancias en que se recogió la información)." },
-  { q:"En el nivel sintáctico, ¿qué es una unidad de análisis y qué es un segmento?",
-    a:"La unidad de análisis es el segmento del texto (normalmente una palabra-término clave) con el que se inicia el análisis. El segmento es la frase o contexto concreto en el que aparece esa palabra clave (no solo la palabra aislada)." },
-  { q:"En el nivel semántico, ¿qué son las unidades de contexto?",
-    a:"Son los párrafos en los que aparecen las unidades de análisis (palabras clave). Su estudio permite contextualizar y comprender mejor el sentido que los sujetos dan a esas palabras." },
-  { q:"¿Cuáles son los tres pasos para elaborar categorías en el nivel semántico?",
-    a:"1) Identificar reglas de análisis (criterios para aceptar o desechar material). 2) Elaborar códigos de clasificación (etiquetas que sintetizan cada grupo de datos; pueden ser descriptivos o explicativos). 3) Definir categorías (mayor grado de abstracción, agrupando uno o más códigos)." },
-  { q:"¿Qué es una regla de análisis y para qué sirve?",
-    a:"Indica las condiciones para codificar un determinado material: cuándo se aplica un código y cuándo no. Deben ser flexibles (pueden cambiar con el proceso) y servir para que otros investigadores entiendan el criterio de clasificación." },
-  { q:"¿Qué diferencia hay entre código descriptivo y código explicativo?",
-    a:"El descriptivo describe las características del fenómeno sin más elaboración (p. ej. «Sobrecarga laboral»). El explicativo añade un componente interpretativo y puede agruparse con otros en una categoría de orden superior (p. ej. dos códigos sobre tensión laboral agrupados en «Estresores laborales»)." },
-  { q:"¿Qué es la matriz de contingencias y para qué se usa? (¡Cuidado, no confundir con la tabla de contingencia!)",
-    a:"Es una tabla resumen de todos los datos analizados (con columnas: ID, segmento y códigos) que permite ver de forma rápida si los códigos se pueden agrupar en una categoría superior. No tiene relación con la tabla de contingencia de la Chi cuadrado, solo coincide el nombre." },
-  { q:"¿Qué cuatro criterios deben cumplir las categorías al definirse?",
-    a:"Exhaustividad (deben servir para clasificar todo el material relevante), exclusividad (un código no debe pertenecer a dos categorías distintas), pertinencia (deben ajustarse a los objetivos del estudio) y objetividad (deben ser replicables por otro investigador)." },
-  { q:"¿Qué cuatro elementos recomienda valorar Hernández-Sampieri para evaluar si las categorías son adecuadas?",
-    a:"Descripción (poder describir completamente la categoría), significado (recoger el significado personal que le dan los sujetos), presencia (frecuencia con que aparece en el material) y relaciones entre categorías (temporales, causales o de conjunto-subconjunto)." },
-  { q:"¿Qué analiza el nivel pragmático del análisis de contenido?",
-    a:"El contexto y las circunstancias en que tuvo lugar la recogida de información, y cómo pueden haber influido en los datos (p. ej. si entró un superior durante una entrevista sobre clima laboral, lo que pudo sesgar las respuestas a partir de ese momento)." },
-  { q:"¿Qué diferencia hay entre el análisis de contenido y el análisis del discurso?",
-    a:"El análisis de contenido se centra en las verbalizaciones de los sujetos (lo manifiesto). El análisis del discurso va más allá: busca el sentido latente detrás del discurso, la ideología o los valores sociales escondidos, considerando la dimensión textual (estructura) y contextual (social, política, cultural)." },
-  { q:"¿Cuándo es especialmente adecuado usar el análisis del discurso?",
-    a:"Para analizar datos provenientes de instituciones, organizaciones o estructuras grupales amplias (más allá del sujeto particular o grupos reducidos como la familia)." },
-  { q:"¿Qué tres sistemas estructuran los programas informáticos de análisis cualitativo (Atlas.ti, NVivo, MAXQDA...)?",
-    a:"Sistema de documentos (las transcripciones), sistema de atributos (características para segmentar la población, p. ej. género, edad) y sistema de categorías (ya existentes o desarrolladas por el investigador)." },
-  { q:"¿Qué elementos recomienda Creswell incluir en el informe cualitativo?",
-    a:"Diálogos/citas literales que apoyen las categorías, mantenidas en la lengua/jerga original de los sujetos, uso de metáforas y analogías, citas para describir emociones, descripciones detalladas y vívidas, e informar de tensiones o contradicciones en las experiencias." },
-  { q:"En investigación cualitativa, ¿cómo se llaman los equivalentes de fiabilidad y validez?",
-    a:"La fiabilidad se denomina responsabilidad o dependencia. La validez se asocia al concepto de credibilidad." },
-  { q:"¿Qué diferencia hay entre dependencia interna y dependencia externa?",
-    a:"Dependencia interna: grado en que dos o más investigadores generan categorías similares a partir de los MISMOS datos. Dependencia externa: grado en que generan categorías similares en el mismo contexto, pero cada uno a partir de SUS PROPIOS datos." },
-  { q:"¿Qué índice se usa para valorar la fiabilidad inter-jueces en análisis cualitativo y qué valor mínimo se exige?",
-    a:"El coeficiente de Kappa (valores entre 0 y 1; más cerca de 1 = más acuerdo). Se exige un mínimo de 0,80 para considerar buena fiabilidad inter-jueces." },
-  { q:"¿Qué medidas propone Franklin y Ballau para aumentar la dependencia?",
-    a:"Preguntas paralelas/similares, registro sistemático de datos y notas de campo, chequeos cruzados (codificación independiente por dos investigadores), chequeos con los propios participantes, auditoría externa, comprobar coincidencia entre distintas fuentes y duplicar muestras." },
-  { q:"¿Qué es la credibilidad y cuál es la principal estrategia para mejorarla?",
-    a:"Es la capacidad del investigador para recoger el significado profundo y verdadero de las experiencias de los sujetos. La principal estrategia para mejorarla es la triangulación: usar diferentes técnicas, fuentes, teorías o investigadores para contrastar los hallazgos." },
-  { q:"¿Qué cuatro tipos de validez plantea Briones (1998) además de la credibilidad?",
-    a:"Validez semántica (acuerdo entre evaluadores al codificar, similar a fiabilidad inter-jueces), validez muestral (la muestra es representativa de la población), validez de constructo (correlación entre las categorías cualitativas y constructos medidos cuantitativamente) y validez predictiva (capacidad de generalizar los resultados a otros contextos)." }
-];
-
-const CAP4 = [
-  { q:"¿Cuáles son los tres tipos de diseños cualitativos y para qué se usa cada uno?",
-    a:"Teoría fundamentada (generar una teoría sobre el fenómeno), diseños etnográficos (analizar y comprender una cultura) y diseños narrativos (el fenómeno central es el propio sujeto individual)." },
-  { q:"¿Quiénes desarrollaron la teoría fundamentada y cuál es su idea central?",
-    a:"Glaser y Strauss (sociólogos), en estudios con pacientes terminales en los años 60, publicado en «The Discovery of Grounded Theory» (1967). La idea central es que la investigación no debe centrarse en confirmar teorías previas, sino en descubrir nuevos conceptos o hipótesis que surjan de los propios datos recogidos." },
-  { q:"¿Cuáles son las 6 características de los diseños de teoría fundamentada (Creswell)?",
-    a:"1) Enfoque basado en procesos. 2) Muestreo teórico/intencional. 3) Análisis comparativo constante de los datos. 4) Categoría principal. 5) Generación de teoría. 6) Memos." },
-  { q:"¿Qué es un código «in vivo»?",
-    a:"Etiqueta para una categoría que se expresa con las palabras exactas de los participantes, en lugar de con términos del investigador o científicos." },
-  { q:"¿Qué es un diseño emergente y qué es la saturación?",
-    a:"Diseño emergente: proceso por el cual el investigador recopila datos, los analiza inmediatamente (sin esperar a tenerlos todos) y decide qué datos recoger a continuación. Saturación: punto en el que el investigador decide que nuevos datos no aportarán información nueva para el desarrollo de las categorías." },
-  { q:"¿Qué criterios debe cumplir la categoría principal en teoría fundamentada (Strauss y Corbin)?",
-    a:"Debe ser central (las demás categorías se relacionan con ella), aparecer con frecuencia en los datos, generar una explicación lógica y consistente sin forzar los datos, ser suficientemente abstracta y mantenerse aunque haya variaciones en los datos." },
-  { q:"¿Qué es una teoría de «rango medio» en teoría fundamentada?",
-    a:"Una explicación con cierto grado de abstracción apoyada en los datos concretos recopilados: ni una hipótesis de trabajo menor (válida solo para un grupo muy reducido) ni una explicación universal aplicable a cualquier situación." },
-  { q:"¿Qué son los memos en teoría fundamentada?",
-    a:"Anotaciones que el investigador hace durante el proceso sobre sus propias reflexiones, intuiciones e ideas, que le ayudan a explorar nuevas fuentes o a organizar los datos. No tienen longitud predeterminada." },
-  { q:"¿En qué consisten los diseños etnográficos y cuál es su origen histórico?",
-    a:"Se usan para describir, analizar y comprender los parámetros culturales (creencias, tradiciones, lenguaje, estructuras socio-económicas) compartidos por un grupo. Su origen está en los antropólogos culturales de finales del s. XIX-principios del XX (p. ej. Margaret Mead), y después en la Escuela de Chicago (1920-1950), centrada en culturas minoritarias mediante el estudio de caso único (entendido como grupo, no como un solo sujeto)." },
-  { q:"¿Cuáles son las 6 características de un estudio etnográfico (Creswell)?",
-    a:"1) Estudio de una cultura compartida por un grupo. 2) Patrones compartidos de comportamientos, creencias y lenguaje. 3) Trabajo de campo. 4) Descripción, análisis e interpretación. 5) Contexto. 6) Reflexión del investigador." },
-  { q:"¿Cuál es la técnica de elección en los diseños etnográficos y por qué?",
-    a:"La observación participante, porque requiere que el investigador pase mucho tiempo integrado en la vida diaria del grupo para poder comprender sus patrones culturales «desde dentro»." },
-  { q:"En la investigación etnográfica, ¿en qué consisten los 3 pasos de descripción, análisis e interpretación?",
-    a:"Descripción: relato detallado y preciso (casi «novelístico») de sujetos y situaciones. Análisis: identificación de los conceptos esenciales que caracterizan los patrones del grupo (ya implica interpretación). Interpretación: conclusiones del investigador, integración con la literatura existente y futuras líneas de investigación." },
-  { q:"¿Qué diferencia clave hay entre el «contexto» en los diseños etnográficos y en los diseños narrativos?",
-    a:"En etnográficos el contexto es macro (historia, política, economía del grupo cultural). En narrativos el contexto es micro (entorno cercano al sujeto: familia, amigos, trabajo)." },
-  { q:"¿En qué se centran los diseños narrativos y qué técnicas de recogida usan?",
-    a:"Se centran en el sujeto como individuo particular, recopilando sus historias y experiencias personales y el significado que les atribuye (finalidad «micro», a diferencia de teoría fundamentada y etnografía que tienen finalidad «macro»). Técnicas de elección: entrevista en profundidad e historia de vida." },
-  { q:"¿Cuáles son las 6 características de los diseños narrativos (Creswell)?",
-    a:"1) Experiencias individuales. 2) Cronología de las experiencias (pasado, presente, futuro). 3) Recopilación de las historias individuales. 4) Reelaboración (dar orden cronológico al relato del sujeto). 5) Codificación (en categorías o temas) y contexto. 6) Colaboración (el investigador negocia con el sujeto qué partes hacer públicas)." },
-  { q:"¿Qué es la «reelaboración» en un diseño narrativo?",
-    a:"El proceso mediante el cual el investigador reúne las historias, analiza sus elementos clave y las reescribe para presentarlas en una secuencia cronológica con sentido, ya que las personas suelen narrar sin mucho orden." }
-];
-
-const CAP5 = [
-  { q:"¿Qué caracteriza a un diseño de caso único y cuándo se utiliza?",
-    a:"Se realiza con un único sujeto (n=1) o con datos agregados de muy pocos sujetos analizados individualmente. Se usa cuando hay dificultades para formar grupo experimental o control (fenómenos poco frecuentes, p. ej. enfermedades raras) o cuando se quiere comprobar la eficacia de una intervención en un sujeto concreto." },
-  { q:"¿Siguen siendo diseños experimentales los de caso único? ¿Qué requisitos deben cumplir (Kazdin)?",
-    a:"Sí. Deben cumplir: 1) Control sobre la situación experimental (línea base + manipulación de la VI). 2) Medir la evolución de la VD a lo largo del tiempo. 3) Buscar una asociación entre VI y VD, descartando variables extrañas." },
-  { q:"¿Cuáles son las 4 fases del diseño de caso único?",
-    a:"1) Establecimiento de la línea base. 2) Aplicación de la intervención. 3) Análisis de los datos. 4) Interpretación de los resultados." },
-  { q:"¿Qué es la línea base y qué es una «serie» en este contexto?",
-    a:"La línea base es el conjunto de observaciones registradas antes de aplicar la intervención (requiere varias medidas para ser fiable). La serie es el intervalo temporal (día, semana...) en el que se agrupan todas las observaciones; lo decide el investigador según la frecuencia del fenómeno y la estabilidad de las medidas." },
-  { q:"¿Qué dos funciones tiene el establecimiento de la línea base?",
-    a:"Función descriptiva (informa de la gravedad del problema) y función predictiva (permite proyectar cómo se comportaría el sujeto si no se aplicara ninguna intervención)." },
-  { q:"¿Qué tres tipos de intervención existen en un diseño de caso único?",
-    a:"Puntual (una única sesión; poco recomendable, efectividad casi nula), uniforme (programa mantenido en el tiempo, la VI se aplica siempre igual e igual de intensa) y gradual (la intensidad de la VI aumenta progresivamente, p. ej. desensibilización sistemática)." },
-  { q:"Para el análisis de los datos en caso único, ¿qué deben presentar las gráficas?",
-    a:"Un número grande de observaciones por serie, y una clara reducción de cambios aleatorios (que se reflejen cambios de nivel o de tendencia, no azarosos)." },
-  { q:"¿Qué diferencia hay entre un cambio de nivel y un cambio de tendencia?",
-    a:"Cambio de nivel: la conducta muestra un cambio escalonado (brusco). Cambio de tendencia: implica un cambio secuencial y progresivo." },
-  { q:"¿Desde qué perspectivas se pueden interpretar los resultados en caso único?",
-    a:"Perspectiva científica (qué ha aportado la investigación al conocimiento teórico) y perspectiva terapéutica (qué le ha aportado al sujeto en particular; en caso único es un fracaso terapéutico claro que el sujeto no mejore)." },
-  { q:"¿Qué cuatro niveles de significación se pueden analizar en un diseño de caso único?",
-    a:"Significación estadística (p<0,05, con estadísticos no paramétricos), significación clínica (mejora desde la perspectiva terapéutica/generalización), significación subjetiva (vivencia del propio sujeto con la intervención, también valora la ética) y significación social (relevancia social de la intervención, p. ej. vacunas en fase experimental)." },
-  { q:"En los diseños AB y ABAB, ¿qué representan las letras A y B?",
-    a:"A representa las fases SIN tratamiento (línea base). B representa las fases CON tratamiento (intervención)." },
-  { q:"¿Qué es un diseño AB y cuándo se usa?",
-    a:"Es el diseño más simple: se establece la línea base (A) y después se aplica el tratamiento (B), sin retirarlo. Solo se usa cuando es imposible retirar la intervención. Es el más débil metodológicamente para la validez interna (susceptible a historia y maduración)." },
-  { q:"¿Qué diferencia hay entre un diseño ABA (de inversión) y un diseño BAB?",
-    a:"ABA (o de inversión/vuelta atrás): línea base (A) → intervención (B) → retirada de la intervención (A) para comprobar si se mantiene la mejora; puede convertirse en ABABA. BAB: la intervención es inmediata por urgencia (B) → se retira al estabilizarse (A) → si hay empeoramiento se reaplica de forma continuada (B); plantea un dilema ético sobre recursos limitados." },
-  { q:"¿Qué dos condiciones deben cumplirse para usar un diseño de línea base múltiple?",
-    a:"Independencia de las conductas seleccionadas (que no covaríen entre sí) y similar sensibilidad de las conductas (que tengan un grado de dificultad de cambio parecido)." },
-  { q:"¿Cuáles son las tres modalidades del diseño de línea base múltiple?",
-    a:"Entre conductas (varios fenómenos en el mismo sujeto), entre sujetos (varios sujetos apareados con la misma intervención) y entre situaciones (un sujeto, un fenómeno, pero en distintas situaciones independientes)." },
-  { q:"¿En qué consiste un diseño de tratamientos alternos?",
-    a:"El investigador analiza simultáneamente la efectividad de dos o más intervenciones para tratar el mismo fenómeno, alternándolas en el mismo sujeto (o probando una distinta en cada sujeto, lo que está más expuesto a variables extrañas por diferencias individuales)." },
-  { q:"¿Qué cuatro tipos de inconvenientes presentan los diseños de caso único?",
-    a:"Ética (proporcionalidad intervención-resultados, presión del investigador sobre el sujeto), fiabilidad (replicabilidad y mantenimiento de la eficacia en otros sujetos/contextos), validez (interna y externa muy cuestionadas en n=1) y esfuerzo del investigador (medidas repetidas, mucho tiempo por sujeto)." },
-  { q:"¿En qué situaciones NO se recomienda usar un diseño de caso único?",
-    a:"Cuando se pueden usar diseños (cuasi)experimentales, cuando la variabilidad en la línea base es muy grande, cuando se quiere generalizar una intervención a toda la población, o cuando hay que comparar la eficacia de varias intervenciones alternativas de forma rigurosa." }
-];
-
-const CAP6 = [
-  { q:"¿Qué es un diseño factorial?",
-    a:"Un diseño en el que se estudian simultáneamente dos o más variables independientes (factores) combinadas, sobre una misma variable dependiente. El objetivo es estudiar los efectos independientes de cada factor, pero sobre todo valorar si hay interacción entre ellos." },
-  { q:"¿Cuáles son las dos ventajas principales de los diseños factoriales?",
-    a:"1) Permiten valorar la interacción entre factores (no solo el efecto de cada uno por separado). 2) Permiten obtener más información con menos sujetos que si se hicieran estudios independientes." },
-  { q:"¿Qué diferencia hay entre un diseño factorial completo e incompleto, y entre balanceado y no balanceado?",
-    a:"Completo: todos los grupos resultantes de combinar los valores de cada factor tienen sujetos representados. Incompleto: algún grupo no tiene ningún sujeto. Balanceado: mismo número de sujetos en cada grupo. No balanceado: número distinto." },
-  { q:"¿Qué son los efectos simples, los efectos principales y el efecto de interacción?",
-    a:"Efecto simple: efecto puntual de un factor para cada valor del otro factor (en un diseño 2x2 hay 4 efectos simples). Efecto principal: impacto global de cada factor, calculado como promedio de sus efectos simples. Efecto de interacción: cuando los valores de un factor modifican los efectos del otro factor sobre la VD." },
-  { q:"En un diseño factorial 2x2, ¿cuántas hipótesis nulas se contrastan y cuáles son?",
-    a:"Tres: 1) El factor A no tiene relación con la VD. 2) El factor B no tiene relación con la VD. 3) No hay interacción significativa entre A y B." },
-  { q:"¿Cuáles son los 4 pasos para desarrollar el análisis de un diseño factorial (León y Montero)?",
-    a:"1) Resumen de los datos (tablas de cada experimento simple + tabla combinada del diseño factorial). 2) Representaciones gráficas. 3) Análisis de los efectos simples. 4) Análisis de la interacción y del efecto principal." },
-  { q:"Gráficamente, ¿cómo se determina si hay o no interacción entre factores?",
-    a:"Se observa si las líneas que representan los efectos simples son paralelas. Si SÍ son paralelas → no hay interacción (el factor actúa igual con ambos valores del otro factor). Si NO son paralelas → sí hay interacción." },
-  { q:"Cuando hay interacción, ¿se puede interpretar el efecto principal mediante el promedio?",
-    a:"Solo si los efectos simples tienen pendientes del mismo signo (ambas positivas o ambas negativas): entonces el promedio (efecto principal) sí es representativo. Si las pendientes tienen signos diferentes, no se puede afirmar que exista un efecto principal, aunque el estadístico pueda sugerir una diferencia significativa (riesgo de sobreestimación)." },
-  { q:"¿De qué tres maneras se pueden extender los diseños factoriales?",
-    a:"1) Aumentando el número de valores de cada factor (más grupos, exige más sujetos; se recomiendan al menos 10 por grupo). 2) Combinando distintos tipos de variables independientes (experimental, cuasi-experimental, ex post-facto). 3) Aumentando el número de factores (más de 2 factores complica mucho la interpretación de interacciones)." },
-  { q:"¿Qué estadístico se utiliza para analizar un diseño factorial?",
-    a:"El análisis de la varianza de dos factores (que puede ser de medidas repetidas)." }
-];
-
-const CAP7 = [
-  { q:"¿Qué es una revisión sistemática (definición de Goodman) y qué cuatro cualidades implica?",
-    a:"«Estudios pormenorizados, selectivos y críticos que tratan de analizar e integrar la información esencial de los estudios primarios sobre un tema, con una perspectiva de síntesis unitaria». Implica ser: pormenorizada (exhaustiva), selectiva (criterios mínimos de inclusión), crítica (analiza con rigurosidad) y de síntesis (conclusiones ordenadas)." },
-  { q:"¿Qué diferencia hay entre una revisión sistemática y una revisión narrativa?",
-    a:"La narrativa la hace un experto basándose en su experiencia/opinión, sin búsqueda sistemática ni criterios explícitos de selección; está más expuesta al sesgo del investigador. La sistemática usa una pregunta estructurada, búsqueda explícita, criterios de selección reproducibles, evaluación crítica de la calidad y síntesis basada en la evidencia." },
-  { q:"¿Qué tipos de estudios observacionales recomienda incluir/excluir el grupo Cochrane?",
-    a:"NO incluir estudios de caso-control centrados en la efectividad de una intervención (diseño ex post-facto retrospectivo). SÍ se pueden incluir estudios de caso-control para analizar efectos secundarios, y estudios de cohortes (longitudinales)." },
-  { q:"¿Por qué las revisiones basadas en diseños experimentales tienen mayor validez externa?",
-    a:"Porque al incluir estudios realizados en diferentes momentos, contextos y por diferentes autores, permiten comprobar que los beneficios de una intervención se generalizan a poblaciones y circunstancias diversas." },
-  { q:"Al seleccionar estudios para una revisión basada en experimentos, ¿qué aspectos hay que valorar de cada uno?",
-    a:"Población (comparabilidad), muestra (tamaño, criterios de inclusión/exclusión), intervención (qué recibió el grupo control, variable diana e instrumentos usados), control de sesgos (apareamiento, ciego/doble ciego), estadística empleada y seguimiento (muertes experimentales)." },
-  { q:"¿Qué tres elementos (Urrutia, 2006) ayudan a formular bien la pregunta de una revisión sistemática?",
-    a:"Tipo de participantes (características que deben compartir), tipo de intervenciones (qué intervención y qué condiciones para el grupo control, atención a las co-intervenciones) y tipo de resultados (perspectiva clínica/terapéutica, subjetiva o económica)." },
-  { q:"¿Qué criterios de inclusión/exclusión se suelen aplicar en una revisión sistemática?",
-    a:"Idioma de publicación, tipo de revista o base de datos (factor de impacto), número mínimo de muestra, y si los estudios fueron aleatorizados. Atención: estos criterios pueden a su vez introducir sesgos (p. ej. el del idioma) en la propia revisión." },
-  { q:"¿Qué diferencia hay entre una búsqueda «precisa» y una búsqueda «sensible»?",
-    a:"Precisa: encuentra artículos muy pertinentes pero puede dejar fuera estudios relevantes (prima la calidad). Sensible: identifica muchos artículos, aunque un mayor porcentaje no sean pertinentes (prima la cantidad). Se recomienda priorizar la sensibilidad, aunque exija más tiempo, y vigilar las publicaciones duplicadas." },
-  { q:"¿Cuáles son los 5 tipos de sesgo en una revisión sistemática (Martín y Seoane Pillado)?",
-    a:"Selección (cómo se eligió la muestra y los criterios de inclusión/exclusión), realización (diferencias en el trato a grupo experimental y control), seguimiento (muertes experimentales, abandonos), información (imposibilidad de mantener el ciego entre estudios) y publicación (tendencia a publicar solo resultados positivos, o solo en ciertos idiomas/revistas)." },
-  { q:"¿Qué es la escala de Jadad y para qué se usa?",
-    a:"Es un sistema de puntuación de calidad metodológica (0 a 5 puntos) para ensayos clínicos, valorando 5 preguntas sobre aleatorización, descripción del método de aleatorización, doble ciego, descripción del cegamiento y descripción de pérdidas/abandonos. Solo aplica a estudios experimentales, sobre todo farmacológicos." },
-  { q:"¿Qué es un meta-análisis y qué dos requisitos debe cumplir una revisión sistemática para poder hacer uno?",
-    a:"Es un tipo de revisión sistemática en la que se hace un análisis estadístico combinado de los estudios individuales. Requisitos: 1) Los resultados se pueden expresar como medida del efecto (odds ratio, riesgo relativo, tamaño del efecto). 2) Tiene sentido agrupar los resultados porque las intervenciones, poblaciones y resultados comparados son similares. Todo meta-análisis es una revisión sistemática, pero no toda revisión sistemática es un meta-análisis." },
-  { q:"¿Cuáles son las principales ventajas y limitaciones de un meta-análisis?",
-    a:"Ventajas: detecta diferencias que estudios pequeños no podían demostrar por sí solos, aumenta la precisión/potencia estadística, ayuda a explicar discrepancias entre estudios y es menos costoso que un gran ensayo propio. Limitaciones: puede distorsionarse por el sesgo de selección de estudios, y la heterogeneidad entre estudios dificulta su interpretación." },
-  { q:"¿Qué cinco técnicas de meta-análisis existen?",
-    a:"Efectos fijos (resultados homogéneos entre estudios), efectos aleatorios (resultados heterogéneos), análisis acumulativo (se van incorporando estudios uno a uno secuencialmente), análisis de sensibilidad (se elimina un estudio cada vez para ver si los resultados se mantienen robustos) y análisis de subgrupos (se combinan estudios con una característica común para explicar la heterogeneidad)." },
-  { q:"¿De qué tres formas se puede interpretar la evidencia de efectividad de una intervención?",
-    a:"Obtención de beneficios (mejora clínica/terapéutica o de calidad de vida), reducción de riesgos (en intervenciones preventivas) y número de sujetos necesarios para que uno mejore (perspectiva económica de coste-beneficio)." },
-  { q:"Al discutir la implicación clínica de una revisión, ¿qué tres aspectos se deben abordar?",
-    a:"Innovación y barreras para el cambio (resistencias al adoptar resultados novedosos), validez externa (si las condiciones «ideales» del estudio se reproducen en la práctica diaria) y aplicabilidad (si los resultados se pueden trasladar a un sujeto concreto: ¿le son aplicables?, ¿es factible?, ¿qué riesgo-beneficio tiene?, ¿son compatibles con sus valores?)." },
-  { q:"¿Qué diferencia hay entre validez externa y aplicabilidad?",
-    a:"Validez externa: capacidad de generalizar los resultados a TODA la población. Aplicabilidad: capacidad de trasladar esos resultados a UN sujeto concreto con su situación particular (puede haber validez externa pero no aplicabilidad para un caso específico)." },
-  { q:"¿De qué manera puede contribuir la investigación cualitativa a una revisión sistemática (Popay)?",
-    a:"Definiendo y refinando la pregunta de investigación, mejorando la revisión al incluir aspectos de implementación (no solo eficacia), ampliando la búsqueda a estudios cualitativos, y complementando la revisión con información más allá de la pura eficacia. Cuando se combinan estudios cuantitativos y cualitativos se habla de «método mixto»." },
-  { q:"¿Qué bases de datos se pueden consultar para revisiones sistemáticas sobre efectividad de intervenciones?",
-    a:"La Biblioteca Cochrane (versión en español: Biblioteca Cochrane Plus) y PROSPERO (incluye revisiones de ciencias sociales y de la salud)." }
-];
-
-const CHAPTERS = [
-  { id:1, title:"Análisis cuantitativo de datos", short:"Cuantitativo", cards:CAP1 },
-  { id:2, title:"Técnicas cualitativas de recogida de datos", short:"Recogida cualitativa", cards:CAP2 },
-  { id:3, title:"Análisis cualitativo de datos", short:"Análisis cualitativo", cards:CAP3 },
-  { id:4, title:"Diseños de investigación cualitativa", short:"Diseños cualitativos", cards:CAP4 },
-  { id:5, title:"Diseños experimentales de caso único", short:"Caso único", cards:CAP5 },
-  { id:6, title:"Diseños factoriales", short:"Factoriales", cards:CAP6 },
-  { id:7, title:"La práctica basada en la evidencia", short:"Evidencia", cards:CAP7 }
-];
-
-// ============================================================
-// ESTADO Y PERSISTENCIA
-// ============================================================
-const STORAGE_KEY = "metodologiaII_fichero_v2";
-let state = { flagged:{}, known:{} };
-
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw){
-      const parsed = JSON.parse(raw);
-      state.flagged = parsed.flagged || {};
-      state.known = parsed.known || {};
+// Parser robusto (carácter por carácter, respeta comillas con saltos de línea)
+function parseCSV(txt) {
+  const rows = [];
+  let row = [];
+  let field = '';
+  let inQuotes = false;
+  let i = 0;
+  const len = txt.length;
+  while (i < len) {
+    const c = txt[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (txt[i+1] === '"') { field += '"'; i += 2; continue; }
+        inQuotes = false; i++; continue;
+      }
+      field += c; i++; continue;
+    } else {
+      if (c === '"') { inQuotes = true; i++; continue; }
+      if (c === ',') { row.push(field.trim()); field = ''; i++; continue; }
+      if (c === '\r') { i++; continue; }
+      if (c === '\n') {
+        row.push(field.trim()); field = '';
+        if (!(row.length === 1 && row[0] === '')) rows.push(row);
+        row = []; i++; continue;
+      }
+      field += c; i++; continue;
     }
-  }catch(e){ console.warn("No se pudo leer el progreso guardado", e); }
-}
-function saveState(){
-  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-  catch(e){ console.warn("No se pudo guardar el progreso", e); }
-}
-
-function cardId(chapterId, idx){ return chapterId + ":" + idx; }
-
-// ============================================================
-// ESTADO DE NAVEGACIÓN
-// ============================================================
-let activeTab = "ch-1";
-
-function totalCardCount(){ return CHAPTERS.reduce((sum,ch)=> sum + ch.cards.length, 0); }
-function flaggedCount(){ return Object.values(state.flagged).filter(Boolean).length; }
-function knownCount(){ return Object.values(state.known).filter(Boolean).length; }
-
-const CLIP_SVG_OUTLINE =
-  '<svg viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-  '<path d="M3 5.5V3a3 3 0 0 1 6 0v9a2 2 0 1 1-4 0V4.8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>' +
-  '</svg>';
-
-// ============================================================
-// CONSTRUCCIÓN DEL RAIL (pestañas de carpeta)
-// ============================================================
-function buildDrawerList(){
-  const list = document.getElementById("drawerList");
-  list.innerHTML = "";
-
-  CHAPTERS.forEach(ch=>{
-    const li = document.createElement("li");
-    const btn = document.createElement("button");
-    btn.className = "tab-btn";
-    btn.dataset.tab = "ch-" + ch.id;
-    btn.innerHTML =
-      '<span class="tag">' + String(ch.id).padStart(2,"0") + '</span>' +
-      '<span class="label">' + ch.short + '</span>' +
-      '<span class="count">' + ch.cards.length + '</span>';
-    btn.addEventListener("click", ()=> switchTab("ch-" + ch.id));
-    li.appendChild(btn);
-    list.appendChild(li);
-  });
-
-  const liFlag = document.createElement("li");
-  const flagBtn = document.createElement("button");
-  flagBtn.className = "tab-btn flagged-tab";
-  flagBtn.dataset.tab = "flagged";
-  flagBtn.id = "flaggedTabBtn";
-  flagBtn.innerHTML =
-    '<span class="tag">⚑</span>' +
-    '<span class="label">No aprendidas</span>' +
-    '<span class="count" id="flaggedTabCount">0</span>';
-  flagBtn.addEventListener("click", ()=> switchTab("flagged"));
-  liFlag.appendChild(flagBtn);
-  list.appendChild(liFlag);
+  }
+  if (field !== '' || row.length) {
+    row.push(field.trim());
+    if (!(row.length === 1 && row[0] === '')) rows.push(row);
+  }
+  return rows.filter(r => r.some(cell => cell !== ''));
 }
 
-// ============================================================
-// CONSTRUCCIÓN DE PANELES
-// ============================================================
-function buildPanels(){
-  const desk = document.getElementById("desk");
-  desk.innerHTML = "";
+async function buscar() {
+  const nombreBuscado = document.getElementById('nameInput').value.trim().toLowerCase();
+  const div = document.getElementById('resultado');
+  div.innerHTML = '<p>Descargando CSV en vivo...</p>';
 
-  CHAPTERS.forEach(ch=>{
-    const panel = document.createElement("section");
-    panel.className = "panel";
-    panel.id = "panel-ch-" + ch.id;
-    panel.innerHTML =
-      '<div class="desk-head">' +
-        '<div>' +
-          '<p class="folio">Carpeta ' + String(ch.id).padStart(2,"0") + ' de 07</p>' +
-          '<h2>' + ch.title + '</h2>' +
-        '</div>' +
-        '<div class="desk-progress">' +
-          '<span id="progress-text-ch-' + ch.id + '"></span>' +
-          '<div class="bar"><i id="progress-bar-ch-' + ch.id + '" style="width:0%"></i></div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="card-grid" id="grid-ch-' + ch.id + '"></div>';
-    desk.appendChild(panel);
-  });
-
-  const flaggedPanel = document.createElement("section");
-  flaggedPanel.className = "panel";
-  flaggedPanel.id = "panel-flagged";
-  flaggedPanel.innerHTML =
-    '<div class="desk-head">' +
-      '<div>' +
-        '<p class="folio">Repaso prioritario</p>' +
-        '<h2>Fichas con clip · no aprendidas</h2>' +
-      '</div>' +
-      '<div class="desk-progress"><span id="flagged-count-text"></span></div>' +
-    '</div>' +
-    '<div id="flaggedContent"></div>';
-  desk.appendChild(flaggedPanel);
-}
-
-// ============================================================
-// CONSTRUCCIÓN DE FICHAS
-// ============================================================
-function escapeHtml(str){
-  const div = document.createElement("div");
-  div.textContent = str;
-  return div.innerHTML;
-}
-
-function makeCardEl(chapter, card, idx){
-  const id = cardId(chapter.id, idx);
-  const isFlagged = !!state.flagged[id];
-  const isKnown = !!state.known[id];
-
-  const el = document.createElement("div");
-  el.className = "index-card" + (isKnown ? " is-known" : "");
-  el.dataset.cardId = id;
-  el.tabIndex = 0;
-
-  el.innerHTML =
-    '<div class="folio-row">' +
-      '<span class="folio-tag">FICHA ' + String(chapter.id).padStart(2,"0") + '-' + String(idx+1).padStart(2,"0") + '</span>' +
-      '<span class="review-mark">revisado</span>' +
-    '</div>' +
-    '<div class="body question">' + escapeHtml(card.q) + '</div>' +
-    '<div class="body answer"><span class="a-label">Respuesta</span>' + escapeHtml(card.a) + '</div>' +
-    '<div class="foot-row">' +
-      '<button class="clip-btn' + (isFlagged ? " is-flagged" : "") + '" data-action="flag" type="button">' +
-        '<span class="clip-icon">' + CLIP_SVG_OUTLINE + '</span>' +
-        '<span>' + (isFlagged ? "con clip" : "poner clip") + '</span>' +
-      '</button>' +
-      '<button class="review-btn' + (isKnown ? " is-known" : "") + '" data-action="known" type="button">' +
-        (isKnown ? "✓ revisada" : "marcar revisada") +
-      '</button>' +
-    '</div>' +
-    '<div class="flip-cue-row" style="display:none"></div>';
-
-  // flip cue placed visually via foot-row already; add a subtle "girar" hint via title attr
-  el.title = "Toca la ficha para ver la respuesta";
-
-  el.addEventListener("click", (e)=>{
-    if(e.target.closest("[data-action]")) return;
-    el.classList.toggle("flipped");
-  });
-  el.addEventListener("keydown", (e)=>{
-    if((e.key === "Enter" || e.key === " ") && document.activeElement === el){
-      e.preventDefault();
-      el.classList.toggle("flipped");
-    }
-  });
-
-  el.querySelector('[data-action="flag"]').addEventListener("click", (e)=>{
-    e.stopPropagation();
-    toggleFlag(id);
-  });
-  el.querySelector('[data-action="known"]').addEventListener("click", (e)=>{
-    e.stopPropagation();
-    toggleKnown(id);
-  });
-
-  return el;
-}
-
-function renderChapterGrid(chapter){
-  const grid = document.getElementById("grid-ch-" + chapter.id);
-  grid.innerHTML = "";
-  chapter.cards.forEach((card, idx)=> grid.appendChild(makeCardEl(chapter, card, idx)));
-  updateChapterProgress(chapter);
-}
-
-function updateChapterProgress(chapter){
-  const total = chapter.cards.length;
-  let known = 0;
-  chapter.cards.forEach((c, idx)=>{ if(state.known[cardId(chapter.id, idx)]) known++; });
-  const pct = total ? Math.round((known/total)*100) : 0;
-  const textEl = document.getElementById("progress-text-ch-" + chapter.id);
-  const barEl = document.getElementById("progress-bar-ch-" + chapter.id);
-  if(textEl) textEl.textContent = known + " / " + total + " revisadas";
-  if(barEl) barEl.style.width = pct + "%";
-}
-
-function renderFlaggedPanel(){
-  const content = document.getElementById("flaggedContent");
-  const items = [];
-  CHAPTERS.forEach(ch=>{
-    ch.cards.forEach((card, idx)=>{
-      const id = cardId(ch.id, idx);
-      if(state.flagged[id]) items.push({ chapter: ch, card, idx });
-    });
-  });
-
-  const countText = document.getElementById("flagged-count-text");
-  if(countText) countText.textContent = items.length + " ficha" + (items.length===1?"":"s") + " con clip";
-
-  if(items.length === 0){
-    content.innerHTML =
-      '<div class="empty-state">' +
-        '<div class="seal">sin<br>pendientes</div>' +
-        '<h3>No hay fichas con clip</h3>' +
-        '<p>Cuando enganches el clip rojo a una ficha desde cualquier carpeta, aparecerá aquí para que la repases sin distracciones.</p>' +
-      '</div>';
+  let text;
+  try {
+    const r = await fetch(csvUrl(SID, GID_DATOS), {cache: 'no-store'});
+    text = await r.text();
+  } catch (e) {
+    div.innerHTML = '<p style="color:red">Error al descargar: ' + e.message + '</p>';
     return;
   }
 
-  const grid = document.createElement("div");
-  grid.className = "card-grid";
-  items.forEach(it=> grid.appendChild(makeCardEl(it.chapter, it.card, it.idx)));
-  content.innerHTML = "";
-  content.appendChild(grid);
-}
+  const rows = parseCSV(text);
+  const headers = rows[0];
 
-// ============================================================
-// ACCIONES
-// ============================================================
-function toggleFlag(id){
-  state.flagged[id] = !state.flagged[id];
-  saveState();
-  refreshAfterChange(id);
-}
-function toggleKnown(id){
-  state.known[id] = !state.known[id];
-  saveState();
-  refreshAfterChange(id);
-}
+  // localizar columna Nombre
+  let nameIdx = 1;
+  for (let i = 0; i < headers.length; i++) {
+    if (headers[i].toLowerCase().includes('nombre') || headers[i].toLowerCase().includes('participante')) nameIdx = i;
+  }
+  // localizar columna M1
+  let m1Idx = -1;
+  for (let i = 0; i < headers.length; i++) {
+    if (headers[i].trim() === 'M1') { m1Idx = i; break; }
+  }
 
-function refreshAfterChange(id){
-  const chapterId = parseInt(id.split(":")[0], 10);
-  const chapter = CHAPTERS.find(c=>c.id === chapterId);
-  if(chapter) renderChapterGrid(chapter);
-  renderFlaggedPanel();
-  updateHeaderStats();
-  updateTabBadges();
-}
+  let html = `<p><b>Total filas leídas:</b> ${rows.length-1} (sin contar header)</p>`;
+  html += `<p><b>Total columnas en header:</b> ${headers.length}</p>`;
+  html += `<p><b>Índice columna Nombre:</b> ${nameIdx} &nbsp; <b>Índice columna M1:</b> ${m1Idx}</p>`;
+  if (m1Idx === -1) {
+    html += `<p style="color:#e74c3c">⚠️ NO se encontró ninguna columna cuyo header sea exactamente "M1". Headers cercanos: ${JSON.stringify(headers.slice(Math.max(0,28),36))}</p>`;
+  } else {
+    html += `<p>Header real en esa columna: <code>${JSON.stringify(headers[m1Idx])}</code></p>`;
+  }
 
-function updateHeaderStats(){
-  document.getElementById("statTotal").textContent = totalCardCount();
-  document.getElementById("statKnown").textContent = knownCount();
-  document.getElementById("statFlagged").textContent = flaggedCount();
-}
-function updateTabBadges(){
-  const badge = document.getElementById("flaggedTabCount");
-  if(badge) badge.textContent = flaggedCount();
-}
-
-function switchTab(tabId){
-  activeTab = tabId;
-  document.querySelectorAll(".tab-btn").forEach(b=> b.classList.toggle("active", b.dataset.tab === tabId));
-  document.querySelectorAll(".panel").forEach(p=> p.classList.toggle("active", p.id === "panel-" + tabId));
-  if(tabId === "flagged") renderFlaggedPanel();
-}
-
-// ============================================================
-// ARRANQUE
-// ============================================================
-function initAll(){
-  loadState();
-  buildDrawerList();
-  buildPanels();
-  CHAPTERS.forEach(renderChapterGrid);
-  renderFlaggedPanel();
-  updateHeaderStats();
-  updateTabBadges();
-  switchTab("ch-1");
-
-  document.getElementById("resetAllBtn").addEventListener("click", ()=>{
-    if(confirm("¿Seguro que quieres vaciar el expediente (clips y fichas revisadas)? No se puede deshacer.")){
-      state = { flagged:{}, known:{} };
-      saveState();
-      CHAPTERS.forEach(renderChapterGrid);
-      renderFlaggedPanel();
-      updateHeaderStats();
-      updateTabBadges();
+  html += '<hr><h3>Filas que coinciden con "' + nombreBuscado + '"</h3>';
+  let found = 0;
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const rawName = row[nameIdx] || '';
+    if (rawName.toLowerCase().includes(nombreBuscado)) {
+      found++;
+      const m1val = m1Idx !== -1 ? row[m1Idx] : '(columna M1 no encontrada)';
+      const ok = m1val && m1val.trim() !== '';
+      html += `<div class="row ${ok ? 'ok' : 'bad'}">
+        <div><span class="label">Fila #${i+1} del sheet</span></div>
+        <div><b>Nombre crudo:</b> "${rawName}" (${rawName.length} caracteres)</div>
+        <div><b>Cantidad de columnas en esta fila:</b> ${row.length} (header tiene ${headers.length})</div>
+        <div><b>Valor en columna M1:</b> "${m1val}" → ${ok ? '✅ TIENE DATO' : '❌ VACÍO'}</div>
+        <div class="label">Fila completa (array):</div>
+        <pre>${JSON.stringify(row)}</pre>
+      </div>`;
     }
-  });
+  }
+  if (found === 0) {
+    html += `<p style="color:#e74c3c">No se encontró ninguna fila con ese nombre.</p>`;
+  }
+
+  div.innerHTML = html;
 }
 
-initAll();
-
+buscar();
 </script>
 </body>
 </html>
